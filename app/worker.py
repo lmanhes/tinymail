@@ -51,7 +51,7 @@ def send_email_task(
             # retry in one hour
             self.retry(countdown=60 * 60)
         else:
-            send_email(
+            r = send_email(
                 email_to=email_to,
                 name_from=name_from,
                 html_template=html_template,
@@ -62,7 +62,11 @@ def send_email_task(
                 pixel_link=pixel_link,
                 email_id=mail.id,
             )
-            mail.time_send = datetime.now(timezone.utc)
-            logger.debug("Mail is send")
-            session.add(mail)
-            session.commit()
+
+            if r.status_code == 250:
+                mail.time_send = datetime.now(timezone.utc)
+                logger.info("Mail is send")
+                session.add(mail)
+                session.commit()
+            else:
+                logger.info(f"Mail cannot be send cause of status code : {r.status_code}")

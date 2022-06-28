@@ -1,6 +1,7 @@
 asyncpg==0.25.0
 celery==5.2.7
 emails==0.6
+email-validator==1.2.1
 fastapi==0.78.0
 loguru==0.6.0
 lxml==4.8.0

@@ -25,7 +25,6 @@ def add_unsubscribe_link(
 def add_pixel_link(html_template: str, email_id: str, target_base_url: str) -> str:
     token = generate_confirmation_token(email_id)
     image_url = target_base_url + f"/{token}"
-    # pixel_link = f"<img src={image_url} height='1' width='2'/>"
     pixel_link = f"""<img src={image_url} style="height: 1px !important; max-height: 1px !important; max-width: 1px !important; width: 1px !important"/>"""
     logger.debug(f"PIXEL LINK : {pixel_link}")
     element = html.fromstring(pixel_link)
@@ -67,7 +66,7 @@ def send_email(
         mail_from=(name_from, settings.MAIL_ADDRESS),
     )
 
-    message.send(
+    r = message.send(
         to=email_to,
         render=infos_to_render,
         smtp={
@@ -78,3 +77,5 @@ def send_email(
             "password": settings.MAIL_PWD,
         },
     )
+
+    return r

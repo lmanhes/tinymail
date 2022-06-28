@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, Query
+from loguru import logger
 from typing import List
+from email_validator import validate_email, EmailNotValidError
 
 from app.models import (
     Contact,
@@ -31,8 +33,20 @@ def get_all_contacts(
 def create_contacts(
     contacts: List[ContactCreate], session: Session = Depends(get_session)
 ):
-    contacts = crud_contact.create_multi(session=session, objs=contacts)
-    return {"ok": True}
+    accepted = []
+    rejected = []
+    for c in contacts:
+        try:
+            email = validate_email(c.email).email
+            c.email = email
+            accepted.append(c)
+        except EmailNotValidError as e:
+            # email is not valid, exception message is human-readable
+            logger.info(str(e))
+            rejected.append(c.email)
+
+    contacts = crud_contact.create_multi(session=session, objs=accepted)
+    return {"rejected_emails": rejected}
 
 
 @router.get("/{contact_id}", response_model=ContactReadWithCampaigns)
