@@ -21,6 +21,7 @@ class ContactCampaignLink(SQLModel, table=True):
 class ContactBase(SQLModel):
     email: str
     meta: Dict = Field(default={}, sa_column=Column(JSON))
+    status: str = "non-subscribed"
 
     class Config:
         arbitrary_types_allowed = True
@@ -44,8 +45,9 @@ class ContactRead(ContactBase):
 
 
 class ContactUpdate(SQLModel):
-    email: Optional[str] = None
-    meta: Optional[dict] = {}
+    email: Optional[str]
+    meta: Optional[dict]
+    status: Optional[str]
 
 
 ############ Campaign ############
