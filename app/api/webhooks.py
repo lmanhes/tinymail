@@ -4,9 +4,9 @@ from io import BytesIO
 from loguru import logger
 from PIL import Image
 
-from app.crud import CRUDMail
+from app.crud import CRUDMail, CRUDContact
 from app.db import get_session, Session
-from app.models import Mail
+from app.models import Mail, Contact
 from app.utils import confirm_token
 
 
@@ -14,6 +14,7 @@ router = APIRouter()
 
 
 crud_mail = CRUDMail(Mail)
+crud_contact = CRUDContact(Contact)
 
 
 @router.get("/pixel/{token}")
@@ -37,6 +38,10 @@ async def pixel_tracking(token: str, session: Session = Depends(get_session)):
 async def unsubscribe_from_email(token: str, session: Session = Depends(get_session)):
     contact_id = confirm_token(token)
     logger.info(f"Receive unsubscribe request from : {contact_id}")
+    contact = crud_mail.get(session=session, id=contact_id)
+    contact.status = "unsubscribed"
+    session.add(contact)
+    session.commit()
     html_content = """
     <html>
         <body>
