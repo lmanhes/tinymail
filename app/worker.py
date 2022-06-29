@@ -2,7 +2,7 @@ from celery import Celery
 from datetime import datetime, timezone
 from loguru import logger
 
-from app import settings
+from settings import settings
 from app.crud import CRUDContact, CRUDMail
 from app.db import Session, engine
 from app.mails import send_email

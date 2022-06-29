@@ -4,7 +4,7 @@ from lxml import html
 from loguru import logger
 
 from app.utils import generate_confirmation_token
-from app import settings
+from settings import settings
 
 
 def add_unsubscribe_link(
@@ -70,9 +70,9 @@ def send_email(
         to=email_to,
         render=infos_to_render,
         smtp={
-            "host": "smtp.gmail.com",
-            "port": 465,
-            "ssl": True,
+            "host": settings.SMTP_HOST,
+            "port": settings.SMTP_PORT,
+            "ssl": settings.SMTP_SSL,
             "user": settings.MAIL_ADDRESS,
             "password": settings.MAIL_PWD,
         },

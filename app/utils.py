@@ -1,7 +1,7 @@
 from itsdangerous import URLSafeTimedSerializer
 from loguru import logger
 
-from app import settings
+from settings import settings
 
 
 def generate_confirmation_token(id_to_encode: str) -> str:
