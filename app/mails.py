@@ -8,13 +8,15 @@ from settings import settings
 
 
 def add_unsubscribe_link(
-    html_template: str, contact_id: str, target_base_url: str
+    html_template: str, contact_id: str, target_base_url: str, 
+    message_before: str = "Vous ne souhaitez plus recevoir ces emails ? ", 
+    message: str = "Se désinscrire"
 ) -> str:
     token = generate_confirmation_token(contact_id)
     unsubscribe_url = target_base_url + f"/{token}"
     unsubscribe_link = f"""
     <div class="footer" style="clear: both; margin-top: 30px; width: 100%; font-size: 10px;">
-        <br> Vous ne souhaitez plus recevoir ces emails ? <a href={unsubscribe_url} style="text-decoration: underline; color: #999999; text-align: center;">Se désinscrire</a>.
+        <br> {message_before} <a href={unsubscribe_url} style="text-decoration: underline; color: #999999; text-align: center;">{message}</a>.
     </div>"""
     element = html.fromstring(unsubscribe_link)
     html_template_tree = html.fromstring(html_template)
@@ -26,7 +28,6 @@ def add_pixel_link(html_template: str, email_id: str, target_base_url: str) -> s
     token = generate_confirmation_token(email_id)
     image_url = target_base_url + f"/{token}"
     pixel_link = f"""<img src={image_url} style="height: 1px !important; max-height: 1px !important; max-width: 1px !important; width: 1px !important"/>"""
-    logger.debug(f"PIXEL LINK : {pixel_link}")
     element = html.fromstring(pixel_link)
     html_template_tree = html.fromstring(html_template)
     html_template_tree.body.append(element)
