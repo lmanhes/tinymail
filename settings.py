@@ -22,6 +22,8 @@ class Settings(BaseSettings):
     UNSUBSCRIBE_URL: Optional[str] = None
     PIXEL_URL: Optional[str] = None
 
+    DAILY_LIMIT: Optional[int] = None
+
     class Config:
         """Loads the dotenv file."""
         env_file: str = ".env"
@@ -34,6 +36,11 @@ class Settings(BaseSettings):
 
         self.UNSUBSCRIBE_URL = self.BASE_URL + "/api/webhooks/unsubscribe"
         self.PIXEL_URL = self.BASE_URL + "/api/webhooks/pixel"
+
+        if self.MAIL_ADDRESS.endswith("gmail.com"):
+            self.DAILY_LIMIT = 500-100 # gmail free
+        else:
+            self.DAILY_LIMIT = 2000-100 # workspace
 
 
 settings = Settings()

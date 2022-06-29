@@ -44,9 +44,7 @@ def send_email_task(
         logger.debug(f"Day count : {day_count}")
 
         # reschedule task if we reach the daily limit
-        # gmail : 500
-        # worspace : 2000
-        if day_count > 400:
+        if day_count > settings.DAILY_LIMIT:
             logger.info("Daily limit reached")
             # retry in one hour
             self.retry(countdown=60 * 60)
