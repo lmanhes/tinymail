@@ -8,7 +8,7 @@ This is a simple API based on [FastAPI](https://github.com/tiangolo/fastapi), [S
 ## What can you do with it ?
 
 - [X] Import contacts with as many metadata as you want and filter automatically the wrong emails
-- [X] Create marketing campaigns by segmenting your contacts
+- [X] Create marketing campaigns and filter contacts into segments
 - [X] Get access to your campaigns's open rates
 - [X] Send unique emails right now or at a specific date
 
