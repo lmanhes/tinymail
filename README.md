@@ -7,10 +7,10 @@ This is a simple API based on [FastAPI](https://github.com/tiangolo/fastapi), [S
 
 ## What can you do with it ?
 
-[X] Import contacts with as many metadata as you want and filter automatically the wrong emails
-[X] Create marketing campaigns by segmenting your contacts
-[X] Get access to your campaigns's open rates
-[X] Send unique emails right now or at a specific date
+- [X] Import contacts with as many metadata as you want and filter automatically the wrong emails
+- [X] Create marketing campaigns by segmenting your contacts
+- [X] Get access to your campaigns's open rates
+- [X] Send unique emails right now or at a specific date
 
 
 ## How ?
@@ -54,8 +54,8 @@ Run the following commands to start:
 - the main web app
 
 ```shell
-redis-server # start a redis instance
-celery -A app.worker worker -l info # start 
+redis-server
+celery -A app.worker worker -l info
 uvicorn app.main:app
 ```
 
