@@ -1,16 +1,17 @@
 import emails
 from emails.template import JinjaTemplate as T
 from lxml import html
-from loguru import logger
 
 from app.utils import generate_confirmation_token
 from settings import settings
 
 
 def add_unsubscribe_link(
-    html_template: str, contact_id: str, target_base_url: str, 
-    message_before: str = "Vous ne souhaitez plus recevoir ces emails ? ", 
-    message: str = "Se désinscrire"
+    html_template: str,
+    contact_id: str,
+    target_base_url: str,
+    message_before: str = "Vous ne souhaitez plus recevoir ces emails ? ",
+    message: str = "Se désinscrire",
 ) -> str:
     token = generate_confirmation_token(contact_id)
     unsubscribe_url = target_base_url + f"/{token}"
@@ -45,9 +46,6 @@ def send_email(
     pixel_link: bool = False,
     email_id: int = None,
 ):
-
-    logger.info(f"unsubscribe url : {settings.UNSUBSCRIBE_URL}")
-    logger.info(f"pixel url : {settings.PIXEL_URL}")
 
     if unsubscribe_link:
         html_template = add_unsubscribe_link(
