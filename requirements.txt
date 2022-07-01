@@ -8,7 +8,6 @@ lxml==4.8.0
 pillow==9.1.1
 psycopg2
 psycopg2-binary
-pytracking==0.2.2
 redis==4.3.3
 sqlalchemy==1.4.35
 sqlmodel==0.0.6
