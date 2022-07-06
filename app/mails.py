@@ -10,8 +10,8 @@ def add_unsubscribe_link(
     html_template: str,
     contact_id: str,
     target_base_url: str,
-    message_before: str = "Vous ne souhaitez plus recevoir ces emails ? ",
-    message: str = "Se désinscrire",
+    message_before: str = "You don't want to hearing from us ? ",
+    message: str = "Unsubscribe",
 ) -> str:
     token = generate_confirmation_token(contact_id)
     unsubscribe_url = target_base_url + f"/{token}"

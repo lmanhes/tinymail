@@ -63,8 +63,8 @@ def send_email_task(
 
             if r.status_code == 250:
                 mail.time_send = datetime.now(timezone.utc)
-                logger.info("Mail is send")
+                logger.info(f"Mail {mail.id} is send")
                 session.add(mail)
                 session.commit()
             else:
-                logger.info(f"Mail cannot be send cause of status code : {r.status_code}")
+                logger.info(f"Mail cannot be send cause of : {r.status_code}")
